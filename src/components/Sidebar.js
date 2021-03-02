@@ -9,9 +9,20 @@ import {ThemeProvider} from "styled-components";
 import Splash from './splashScreen'
 import {useState} from "react";
 import db from '../firebase'
+import {useHistory} from 'react-router-dom'
 
 
 function Sidebar(props) {
+
+    const history = useHistory();
+    const goToChanenel = (id) =>{
+        if(id){
+            console.log(id)
+            history.push(`/room/${id}`)
+
+        }
+
+    }
     const addName = () => {
         const inputRoom = prompt('Enter Room Name');
         if(inputRoom){
@@ -56,7 +67,7 @@ function Sidebar(props) {
                 <ChannelsList>
                     {
                     props.rooms.map(item => (
-                            <Channel>
+                            <Channel onClick={() => goToChanenel(item.id)}>
                                 # {item.name}
                             </Channel>
                         ))

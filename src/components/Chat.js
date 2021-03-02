@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import TextEditor from './TextEditor'
 import styled from 'styled-components';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
@@ -7,15 +7,55 @@ import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
 import { InfoOutlined } from '@material-ui/icons';
 import ChatInput from './ChatInput';
 import ChatMessages from './ChatMessages'
+import db from '../firebase';
+import { useParams } from 'react-router-dom';
+
 
 function Chat() {
+    let { channelId } = useParams();
+    const [channel , setChannel] = useState();
+    //create a message state
+    const [messages , setMessages] = useState([]);
+
+    //creating a messages collection functoin that will add message to database and fetch to out chat component
+    const getMessages = () => {
+        db.collection('room')
+        .doc(channelId)
+        .collection('messages')
+        .orderBy('timestamp', 'asc')
+        .onSnapshot((snapshot) =>{ 
+            let message = snapshot.docs.map((doc) => doc.data())
+                setMessages(message);
+                
+        })
+    }
+
+
+
+
+    const getChannels = () => {
+        db.collection('room')
+        .doc(channelId)
+        .onSnapshot((snapshot) =>{
+            setChannel(snapshot.data())
+        })
+
+    }
+    useEffect(() =>{
+        getMessages();
+        getChannels();
+        
+    }, [channelId]);
+   
+
     return (
         <Container>
             <Header>
                 <Channel>
                     <ChannelName>
-                        # Mc Fresh
+                        # {channel && channel.name}
                     </ChannelName>
+                        <StarBorderIcon/>
                 
                 <ChannelInfo>
                     this channel is awesome!
@@ -29,24 +69,24 @@ function Chat() {
                      <Info/>
                 </ChannelDetails>
 
-                    {/* <h3> Mc fresh</h3>
-                    <StarBorderIcon style={{marginLeft:10}}/>
-                
-                <sideContainer>
-                    <PersonAddIcon style={{padding:20}}/>
-                    <InfoIcon style={{padding:20}}/>
-                </sideContainer> */}
             </Header>
             <MessageContainer>
                 <ChatMessages/>
+                {
+                  messages > 0 && 
+                  messages.map((data) => {
+                      <ChatMessages
+                       user = {data.text}/>
+                  })
+                }
+                
             </MessageContainer>
             <ChatInputHolder>
                 <ChatInput/>
             </ChatInputHolder>
         </Container>
-        
-    );
-};
+    )       
+}
 
 
 
@@ -63,9 +103,12 @@ const Info = styled(InfoOutlined)`
     margin-left: 10px;
     `
 const MessageContainer = styled.div`
+    z-index:10;
 `
 const ChannelName = styled.div`
     font-weight : 700;
+    display:flex;
+    align-items:center;
     `
 const ChannelInfo = styled.div`
     font-weight: 400;

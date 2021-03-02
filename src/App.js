@@ -36,7 +36,6 @@ function App () {
   useEffect(() => {
       getChannels();
     }, []);
-    console.log("user in our state:", user)
  
   return (
    <div className="App">
@@ -52,12 +51,12 @@ function App () {
           <Main>
             <Sidebar rooms={rooms}/> 
             <Switch>
-              <Route path="/room">
+              <Route path="/room/:channelId">
                 <Chat style={{color:"white"}}/>
               </Route>
-              {/* <Route path="/">
-                <Login  />
-              </Route> */}
+              <Route path="/">
+                Select or Create channel to Start
+              </Route>
             </Switch>
           </Main>
         </Container>

@@ -1,20 +1,19 @@
 import React from 'react'
 import styled from 'styled-components';
 
-function ChatMessages() {
+function ChatMessages({user, image, text, timestamp}){
     return (
         <Container>
             <UserAvatar>
-                <img src= "https://yt3.ggpht.com/yti/ANoDKi7BLBx687asZ0lwV2j85hH8k035Y6LMZ5Wzv6q1ZQ=s88-c-k-c0x00ffffff-no-rj-mo"/>
+                <img src={image} />
             </UserAvatar>
             <MessageContent>
                 <Name>
-                    Mc
-                    <span>22/22/2020 11:30 AM</span>
+                    {user}
+                    <span>{timestamp}</span>
                 </Name>
                 <Text>
-                    this is the coolest challenge
-
+                    {text}
                 </Text>
             </MessageContent>
 
@@ -25,6 +24,7 @@ function ChatMessages() {
 
 export default ChatMessages
 const Container = styled.div`
+z-index:10;
 padding:8px 20px;
 display:flex;
 align-items: center;

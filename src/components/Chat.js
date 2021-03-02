@@ -116,7 +116,7 @@ const ChannelInfo = styled.div`
     font-size: 16px;
     margin-right: 8px;
     padding-left:8px;
-    margin-top: 8px;
+    margin-top: 9px;
     `
 
 const Header = styled.div`

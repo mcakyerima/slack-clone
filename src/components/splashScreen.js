@@ -4,6 +4,7 @@ import { HiMoon } from "react-icons/hi"
 import { light } from "@material-ui/core/styles/createPalette";
 import { Container } from "@material-ui/core";
 function Splash (props) {
+    console.log(props)
     function changeTheme() {
         if (props.theme === 'light') {
             props.setTheme('dark');

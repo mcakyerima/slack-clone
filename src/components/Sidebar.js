@@ -13,6 +13,7 @@ import {useHistory} from 'react-router-dom'
 
 
 function Sidebar(props) {
+   
 
     const history = useHistory();
     const goToChanenel = (id) =>{
@@ -24,14 +25,26 @@ function Sidebar(props) {
 
     }
     const addName = () => {
-        const inputRoom = prompt('Enter Room Name');
-        if(inputRoom){
-            db.collection('room').add({
-                name: inputRoom
-            });
-        }
+        <h1>this is awesome</h1>
+        return (
+            <h1>i am the input</h1>
+            // <Form>
+            //     <h2>Welcome</h2>
+            //     <form>
+            //         <h1>Enter Channnel Name</h1>
+            //         <input>Add</input>
+            //         <input>Cancel</input>
+            //     </form>
+            // </Form>
+        );
+        // const inputRoom = prompt('Enter Room Name');
+        // if(inputRoom){
+        //     db.collection('room').add({
+        //         name: inputRoom
+        //     });
+        // }
 
-    }
+    };
     const [theme, setTheme] = useState('light');
     return (
         <Container>
@@ -61,13 +74,14 @@ function Sidebar(props) {
                         Channels
                     </div>
                     <Plus>
-                    <AddIcon onClick={addName}/>
+                    <AddIcon onClick={()=> addName()}/>
                     </Plus>
                 </NewChannelContainer>
                 <ChannelsList>
                     {
                     props.rooms.map(item => (
-                            <Channel onClick={() => goToChanenel(item.id)}>
+                            <Channel  onClick={ () =>{
+                                 goToChanenel(item.id)}}>
                                 # {item.name}
                             </Channel>
                         ))
@@ -81,10 +95,17 @@ function Sidebar(props) {
 
 export default Sidebar
 
+const Form = styled.span`
+    font-size: 300px;
+    z-index:100;
+    position: absolute;
+    `
+
 //  
 // ${props.style.backgroundColor}
 const Container = styled.div`
-background: blue;
+background: rgb(61,226,236); 
+background: ${props => props.theme.sideBackground};
 `
 const Plus = styled.div`
     cursor:pointer;
@@ -94,8 +115,8 @@ const Plus = styled.div`
     `
 
 const WorkspaceContainer = styled.div`
-    color: white;
-    height: 64px;
+    color:white;
+    height: 69px;
     display: flex;
     align-items: center;
     padding-left: 19px;
@@ -127,7 +148,7 @@ const MainChannels = styled.div`
 `
 
 const MainChannelItem = styled.div`
-    color: rgb(188,171,188);
+    color: white;
     display: grid;
     grid-template-columns: 15% auto;
     height: 28px;
@@ -135,12 +156,13 @@ const MainChannelItem = styled.div`
     padding-left: 19px;
     cursor: pointer;
     :hover {
-        background: #350D36;
+        background: linear-gradient(to top, #000046, #1cb5e0);
+        font-size: 18px;
     }
 `
 
 const ChannelsContainer = styled.div`
-    color: rgb(188,171,188);
+    color: white;
     margin-top: 10px;
 `
 
@@ -162,6 +184,8 @@ const Channel = styled.div`
     padding-left: 19px;
     cursor: pointer;
     :hover {
-        background: #350D36;
+        background: linear-gradient(to top, #000046, #1cb5e0);
+        height:30px;
+        font-size: 18px;
     }
 `

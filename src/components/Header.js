@@ -8,20 +8,21 @@ import {useState} from 'react'
 import userEvent from '@testing-library/user-event';
 
 
-function Header({user , signOut}) {
+function Header({props, user , signOut}){
+            //console.log(prop["light"])
     // const [theme, setTheme] = useState('dark');
     return (
         <Container>
             {/* <ThemeProvider theme={themes[theme]}> */}
             {/* <Splash theme={theme} setTheme={setTheme}/>   */}
             <Main>
-                <AccessTimeIcon />
+                <AccessTimeIcon style={{marginTop:7}}/>
                 <SearchContainer>
                     <Search>
                         <input type="text" placeholder="Search Mc Fresh Continent" />
                     </Search>
                 </SearchContainer>
-                <HelpOutlineIcon />
+                <HelpOutlineIcon style={{marginTop:7}}/>
             </Main>
             <UserContainer>
                 <Name>
@@ -41,9 +42,10 @@ export default Header
 
 
 const Container = styled.div`
-    background: #350d36;
+    background: ${props => props.theme.sideBackground};
     color: white;
     display: flex;
+    height: 45px;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -65,17 +67,20 @@ const SearchContainer = styled.div`
 const Search = styled.div`
     box-shadow: inset 0 0 0 1px rgb(104 74 104);
     width: 100%;
-    border-radius: 6px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
+    border: 2px solid white;
 
     input {
         background-color: transparent;
         border: none;
+        width: 100%;
+        height:25px;
         padding-left: 8px;
         padding-right: 8px;
         color: white;
-        padding-top: 4px;
+        padding-top: 5px;
         padding-bottom: 4px;
     }
 
@@ -112,17 +117,4 @@ const UserImage = styled.div`
         cursor:pointer;
     }
 `
-const ligthTheme = {
-    pageBackground: "white",
-    fontColor: "black"
-  }
-  const darkTheme = {
-    pageBackground : "black",
-    fontColor: 'white'
-  }
-  const themes = {
-    light : ligthTheme,
-    dark : darkTheme
-  }
-  
   

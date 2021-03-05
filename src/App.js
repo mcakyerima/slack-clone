@@ -12,6 +12,9 @@ import Sidebar from './components/Sidebar';
 import db from './firebase'
 import { ContactPhoneSharp } from '@material-ui/icons';
 import {auth, provder} from './firebase';
+import EmptyChat from './components/EmptyChat'
+
+
 
 function App () {
    
@@ -44,18 +47,18 @@ function App () {
       <Router>
         {
           !user ?
-          <Login setUser={setUser}/>
+          <Login setUser={setUser} theme={theme}/>
           :
         <Container >
-          <Header signOut= {signOut} user={user}/>
+          <Header signOut={signOut} user={user} theme={theme}/>
           <Main>
-            <Sidebar rooms={rooms}/> 
+            <Sidebar theme={theme} rooms={rooms}/> 
             <Switch>
               <Route path="/room/:channelId">
-                <Chat style={{color:"white"}}/>
+                <Chat user={user} theme={theme}/>
               </Route>
               <Route path="/">
-                Select or Create channel to Start
+                <EmptyChat/>
               </Route>
             </Switch>
           </Main>
@@ -74,10 +77,11 @@ const Container = styled.div`
   width: 100%;
   height: 100vh;
   display: grid;
-  grid-template-rows: 38px auto;
+  grid-template-rows: 38px minmax(0, 1fr);
   background: ${props => props.theme.pageBackground};
   transition: all .5s ease;
   color: ${props => props.theme.fontColor};
+  
 `
 
 const Main = styled.div`
@@ -86,11 +90,18 @@ const Main = styled.div`
 `
 const ligthTheme = {
   pageBackground: "white",
-  fontColor: "black"
+  fontColor: "black",
+  sideBackground : "linear-gradient(to bottom, #00c6ff, #0072ff);",
+  chatInput:'#0c91c9',
+  loginColor :'#cbd4c5'
 }
 const darkTheme = {
   pageBackground : "black",
-  fontColor: 'white'
+  fontColor: 'white',
+  sidebarfont : 'red',
+  sideBackground: 'linear-gradient(to bottom, #ed213a, #93291e);',
+  chatInput: '#961212',
+  loginColor: "url(./components/asset/login.gif);"
 }
 const themes = {
   light : ligthTheme,

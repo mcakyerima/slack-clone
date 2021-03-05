@@ -10,7 +10,7 @@ function ChatMessages({user, image, text, timestamp}){
             <MessageContent>
                 <Name>
                     {user}
-                    <span>{timestamp}</span>
+                    <span>{new Date(timestamp.toDate()).toUTCString()}</span>
                 </Name>
                 <Text>
                     {text}
@@ -22,7 +22,7 @@ function ChatMessages({user, image, text, timestamp}){
     )
 }
 
-export default ChatMessages
+export default ChatMessages;
 const Container = styled.div`
 z-index:10;
 padding:8px 20px;
@@ -31,6 +31,7 @@ align-items: center;
 :hover{
     cursor:pointer;
     background: #e8ebe6;
+    color:black;
 }
 `
 const UserAvatar = styled.div`
@@ -60,4 +61,7 @@ const Name = styled.span`
     }
 `
 const Text = styled.span`
+:hover{
+    color:black;
+}
 `

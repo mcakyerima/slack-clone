@@ -9,9 +9,12 @@ import ChatInput from './ChatInput';
 import ChatMessages from './ChatMessages'
 import db from '../firebase';
 import { useParams } from 'react-router-dom';
+import firebase from 'firebase';
+import ReactScrollableFeed from 'react-scrollable-feed';
 
 
-function Chat() {
+
+function Chat( { user, props }) {
     let { channelId } = useParams();
     const [channel , setChannel] = useState();
     //create a message state
@@ -28,6 +31,20 @@ function Chat() {
                 setMessages(message);
                 
         })
+    }
+    //creating a send message func
+    const sendMessage = (text) => {
+        if (channelId){
+            let payload = {
+                text : text,
+                timestamp: firebase.firestore.Timestamp.now(),
+                User: user.name,
+                UserImage : user.userPhoto,
+
+            }
+            db.collection('room').doc(channelId).collection('messages').add(payload);
+            console.log(payload)
+        }
     }
 
 
@@ -46,6 +63,11 @@ function Chat() {
         getChannels();
         
     }, [channelId]);
+    messages.map((data) =>{
+        <ChatMessages
+        user = {data.User}
+        text = {data.text}/>
+    })
    
 
     return (
@@ -54,8 +76,9 @@ function Chat() {
                 <Channel>
                     <ChannelName>
                         # {channel && channel.name}
-                    </ChannelName>
                         <StarBorderIcon/>
+                    </ChannelName>
+                        
                 
                 <ChannelInfo>
                     this channel is awesome!
@@ -71,18 +94,23 @@ function Chat() {
 
             </Header>
             <MessageContainer>
-                <ChatMessages/>
+                <ReactScrollableFeed>
                 {
-                  messages > 0 && 
-                  messages.map((data) => {
-                      <ChatMessages
-                       user = {data.text}/>
-                  })
+                    messages.map((data, i) => (
+                        <ChatMessages
+                        user = {data.User}
+                        text = {data.text}
+                        image = {data.UserImage}
+                        timestamp = {data.timestamp}
+                        />
+
+                    ))
+               
                 }
-                
+                </ReactScrollableFeed>
             </MessageContainer>
             <ChatInputHolder>
-                <ChatInput/>
+                <ChatInput sendMessage = {sendMessage} props={props}/>
             </ChatInputHolder>
         </Container>
     )       
@@ -103,8 +131,9 @@ const Info = styled(InfoOutlined)`
     margin-left: 10px;
     `
 const MessageContainer = styled.div`
-    z-index:10;
-`
+    display:flex;
+    flex-direction: column;
+    overflow-y: scroll;`
 const ChannelName = styled.div`
     font-weight : 700;
     display:flex;
@@ -126,6 +155,7 @@ const Header = styled.div`
     align-items: center;
     border-bottom: 1px solid grey;
     justify-content:space-between;
+    margin-top: 10px;
 
 `
 const ChatInputHolder = styled.div`
@@ -133,5 +163,6 @@ const ChatInputHolder = styled.div`
 
 const Container = styled.div`
     display: grid;
-    grid-template-rows: 65px auto min-content;
+    grid-template-rows: 70px auto min-content;
+    min-height: 0;
    `

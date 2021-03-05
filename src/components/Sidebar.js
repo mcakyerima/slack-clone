@@ -10,44 +10,45 @@ import Splash from './splashScreen'
 import {useState} from "react";
 import db from '../firebase'
 import {useHistory} from 'react-router-dom'
+import AddChannels from './AddChannels';
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 
 
 function Sidebar(props) {
-   
-
     const history = useHistory();
     const goToChanenel = (id) =>{
         if(id){
             console.log(id)
-            history.push(`/room/${id}`)
-
+            history.push(`/room/${id}`);
+            updateChannelList();
         }
 
     }
-    const addName = () => {
-        <h1>this is awesome</h1>
-        return (
-            <h1>i am the input</h1>
-            // <Form>
-            //     <h2>Welcome</h2>
-            //     <form>
-            //         <h1>Enter Channnel Name</h1>
-            //         <input>Add</input>
-            //         <input>Cancel</input>
-            //     </form>
-            // </Form>
-        );
-        // const inputRoom = prompt('Enter Room Name');
-        // if(inputRoom){
-        //     db.collection('room').add({
-        //         name: inputRoom
-        //     });
-        // }
+    const deleteChannel = ({id}) => {
+        if (id) {
+          db.collection('room')
+            .doc(id)
+            .delete()
+            .then(() => {
+              alert("Room is Deleted");
+              history.push(`/room`);
+            })
+            .catch((error) => {
+              console.error("Cannot find document: ", error);
+            });
+        }
+      };
 
+
+    const [message , showMessage] = useState();
+  
+    const inputRoom = () => {
+        showMessage(<AddChannels showMessage={showMessage}/>)
     };
-    const [theme, setTheme] = useState('light');
+       
     return (
         <Container>
+            {message}
             <WorkspaceContainer>
                 <Name>
                     Mc Fresh Continet
@@ -74,7 +75,7 @@ function Sidebar(props) {
                         Channels
                     </div>
                     <Plus>
-                    <AddIcon onClick={()=> addName()}/>
+                    <AddIcon onClick={()=> inputRoom()}/>
                     </Plus>
                 </NewChannelContainer>
                 <ChannelsList>
@@ -83,6 +84,8 @@ function Sidebar(props) {
                             <Channel  onClick={ () =>{
                                  goToChanenel(item.id)}}>
                                 # {item.name}
+                                {item.id === channelId ? (<DeleteIcon onClick={() => deleteChannel(item.id)} />) 
+                                : ("")}
                             </Channel>
                         ))
                     }
@@ -175,7 +178,8 @@ const NewChannelContainer = styled.div`
     padding-right: 12px;
 `
 
-const ChannelsList = styled.div``
+const ChannelsList = styled.div`
+    overflow-y: scroll;`
 
 const Channel = styled.div`
     height: 28px;

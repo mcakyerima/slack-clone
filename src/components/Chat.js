@@ -102,6 +102,7 @@ function Chat( { user, props }) {
                         text = {data.text}
                         image = {data.UserImage}
                         timestamp = {data.timestamp}
+                        props = {props}
                         />
 
                     ))

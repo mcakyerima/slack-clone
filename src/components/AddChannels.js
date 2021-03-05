@@ -1,13 +1,14 @@
 import { React, useState} from 'react'
 import styled from 'styled-components';
+import db from '../firebase';
 
 
 function AddChannels({showMessage}) {
     const [name , addName ] = useState();
     
     const update = (e) => {
-        const reslt = name
-        console.log(reslt);
+        const result = name
+        db.collection('room').add({name: result});
         addName(null);
         showMessage(null)
     }
@@ -40,33 +41,40 @@ const Btn = styled.div`
     margin-top:10px;
     `
 const Submit = styled.div`
-    height:40px;
-    width:100px;
-    background: cyan;
+    height:41px;
+    color:white;
+    width:110px;
+    background: #20e64e;
     display:flex;
     justify-content:center;
     align-items:center;
     font-size:20px;
-    font-weight:bold;
+    font-weight:normal;
     border-radius:10px;
     margin-left:auto;
     margin-right:8px;
     :hover{
         cursor:pointer;
+        box-shadow: -1px -1px 27px -2px rgba(0,0,0,0.31);
     }`
 const Cancel = styled.div`
-height:40px;
+height:39px;
+color:#20e64e;
 width:100px;
-background: cyan;
+background: none;
 display:flex;
 justify-content:center;
 align-items:center;
 font-size:20px;
 font-weight:bold;
+border:1px solid #20e64e;
 border-radius:10px;
 margin-right:auto;
 :hover{
     cursor:pointer;
+    background: #20e64e;
+    color: white;
+    box-shadow: -1px -1px 27px -2px rgba(0,0,0,0.31);
 }`
     
 const Card = styled.div`
@@ -86,9 +94,9 @@ const Form = styled.div`
     input{
         margin-bottom:10px;
         font-size:20px;
-        width:300px;
+        width:350px;
         padding:20px;
-        border-bottom:2px solid blue;
+        border-bottom:2px solid #20e64e;
         border-top: none;
         border-left:none;
         border-right:none;
@@ -100,12 +108,18 @@ const Form = styled.div`
     }`
 const Content = styled.div`
     background:rgb(0,0,0,0.7);
-    z-index:10;
-    height:100vh;
+    background-size:cover;
+    min-height: 100%;
+    min-width:100%;
     width:100%;
+    height:auto;
+    z-index:10;
     display:flex;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    position:absolute;
+    position:fixed;
+    top:0;
+    left:0;
+    
     `

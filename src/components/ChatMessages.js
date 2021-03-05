@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 
-function ChatMessages({user, image, text, timestamp}){
+function ChatMessages({user, image, text, timestamp , props}){
     return (
         <Container>
             <UserAvatar>
@@ -30,7 +30,7 @@ display:flex;
 align-items: center;
 :hover{
     cursor:pointer;
-    background: #e8ebe6;
+    background: ${props => props.theme.sideBackground};
     color:black;
 }
 `
@@ -48,6 +48,9 @@ const UserAvatar = styled.div`
 const MessageContent = styled.div`
     display: flex;
     flex-direction: column;
+    background:${props => props.theme.sideBackground};;
+    padding:20px;
+    border-radius:10px;
 
 `
 const Name = styled.span`

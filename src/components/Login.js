@@ -106,8 +106,10 @@ const SignIn = styled.button`
     }
 `
 const Container = styled.div`
-    width:100%;
-    height:100vh * 2;
+    position:fixed;
+    left:0;
+    right:0;
+    height:auto;
     background:linear-gradient(to bottom, #800080, #ffc0cb);
     background-size:cover;
     display:flex;

@@ -29,15 +29,14 @@ function EmptyChat() {
 export default EmptyChat;
 
 const Container = styled.div`
-    margin-top:40px;
     display:flex;
+    min-height:100%;
+    height:auto;
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    margin-bottom:0;
     `
 const Main = styled.div`
-    margin-bottom:100px;
     display:flex;
     flex-direction:column;
     align-items:center;

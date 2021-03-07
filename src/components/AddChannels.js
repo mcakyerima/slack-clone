@@ -56,6 +56,8 @@ const Submit = styled.div`
     :hover{
         cursor:pointer;
         box-shadow: -1px -1px 27px -2px rgba(0,0,0,0.31);
+        backgr ound:white;
+        color:#20e64e;
     }`
 const Cancel = styled.div`
 height:39px;

@@ -127,10 +127,11 @@ const SlackLogo = styled.img`
     }
 `
 const Slack = styled.div`
-        width:200px;`
+        width:200px;
+        color:white;`
 
 const Content = styled.div`
-    background: yellow;
+    background: linear-gradient(to bottom, #fc00ff, #00dbde);;
     position:relative;
     padding:100px;
     border-radius:20px;
@@ -141,12 +142,16 @@ const Content = styled.div`
     justify-content:center;
     align-items:center;
     box-shadow: -1px -1px 27px -2px rgba(0,0,0,0.51);
+    :hover{
+        transform: translateY(-10px);   
+        transition: linear .2s}
 
 `
 
 const Google = styled.img`
-    height:30px;
-    width:30px;
-    margin-right:10px;
+    height:19px;
+    width:19px;
+    margin-right:0px;
+    padding-right:25px;
     `
 

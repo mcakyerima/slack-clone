@@ -20,24 +20,24 @@ function Sidebar(props) {
         if(id){
             console.log(id)
             history.push(`/room/${id}`);
-            updateChannelList();
+            // updateChannelList();
         }
 
     }
-    const deleteChannel = ({id}) => {
-        if (id) {
-          db.collection('room')
-            .doc(id)
-            .delete()
-            .then(() => {
-              alert("Room is Deleted");
-              history.push(`/room`);
-            })
-            .catch((error) => {
-              console.error("Cannot find document: ", error);
-            });
-        }
-      };
+    // const deleteChannel = ({id}) => {
+    //     if (id) {
+    //       db.collection('room')
+    //         .doc(id)
+    //         .delete()
+    //         .then(() => {
+    //           alert("Room is Deleted");
+    //           history.push(`/room`);
+    //         })
+    //         .catch((error) => {
+    //           console.error("Cannot find document: ", error);
+    //         });
+    //     }
+    //   };
 
 
     const [message , showMessage] = useState();
@@ -84,7 +84,7 @@ function Sidebar(props) {
                             <Channel  onClick={ () =>{
                                  goToChanenel(item.id)}}>
                                 # {item.name}
-                                {item.id === channelId ? (<DeleteIcon onClick={() => deleteChannel(item.id)} />) 
+                                {item.id? (< AddCircleOutlineIcon/>) 
                                 : ("")}
                             </Channel>
                         ))
